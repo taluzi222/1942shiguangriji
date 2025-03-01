@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时光日记</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>时光日记</h1>
+            <div class="button-group">
+                <button class="btn" id="weatherBtn">查看天气</button>
+                <button class="btn" id="settingsBtn">设置</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="recording-section">
+                <button class="record-btn" id="recordBtn">
+                    <span id="recordIcon">⏺</span>
+                </button>
+                <div id="recordingTime">00:00</div>
+                <div id="recordingStatus"></div>
+                <p>按下录音键，录制您想说的话</p>
+                <textarea id="recordText" placeholder="记录现在的想法"></textarea>
+                <button class="btn" id="submitRecordBtn">确认提交</button>
+            </section>
+
+            <section class="photo-section">
+                <input type="file" id="photoInput" accept="image/*" multiple style="display: none;">
+                <button class="btn" onclick="document.getElementById('photoInput').click()">上传图片</button>
+                <div class="photo-grid" id="photoGrid"></div>
+            </section>
+
+            <section class="health-section">
+                <h2>今日健康记录</h2>
+                <div class="health-item">
+                    <label for="bloodPressureHigh">血压：</label>
+                    <input type="number" class="health-input" id="bloodPressureHigh" placeholder="收缩压"> /
+                    <input type="number" class="health-input" id="bloodPressureLow" placeholder="舒张压">
+                </div>
+                <div class="health-item">
+                    <label for="sleepQuality">睡眠质量：</label>
+                    <select class="health-input" id="sleepQuality">
+                        <option value="">请选择</option>
+                        <option value="very-good">很好</option>
+                        <option value="good">好</option>
+                        <option value="normal">一般</option>
+                        <option value="bad">差</option>
+                        <option value="very-bad">很差</option>
+                    </select>
+                </div>
+                <div class="health-item">
+                    <label for="mood">今日心情：</label>
+                    <select class="health-input" id="mood">
+                        <option value="">请选择</option>
+                        <option value="very-happy">非常开心</option>
+                        <option value="happy">开心</option>
+                        <option value="normal">一般</option>
+                        <option value="sad">不开心</option>
+                        <option value="very-sad">非常不开心</option>
+                    </select>
+                </div>
+            </section>
+          <section>
+            <button class = "btn" id="viewDiaryBtn">查看日记</button>
+              <input type="date" id="diaryDate" style="display:none">
+          </section>
+          <section>
+          <button class="btn" id="exportDataBtn">导出数据</button>
+            <div id="exportOptions" style="display: none;">
+                <label for="startDate">开始日期:</label>
+                <input type="date" id="startDate">
+                <label for="endDate">结束日期:</label>
+                <input type="date" id="endDate">
+                <button class="btn" id="exportDataConfirmBtn">导出</button>
+            </div>
+          </section>
+        </main>
+    </div>
+
+    <!-- 天气模态框 -->
+    <div class="modal" id="weatherModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeWeatherBtn">×</span>
+            <h2>天气信息</h2>
+            <div id="weatherInfo"></div>
+            <button class="btn" id="weatherVoiceBtn">语音播报</button>
+            <button class="btn" id="refreshWeatherBtn">刷新</button>
+        </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div class="settings-panel" id="settingsPanel">
+        <h3>设置</h3>
+        <div class="setting-item">
+            <label for="fontSize">字体大小：</label>
+            <select id="fontSize">
+                <option value="small">小</option>
+                <option value="medium" selected>中</option>
+                <option value="large">大</option>
+                <option value="extra-large">特大</option>
+            </select>
+        </div>
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="highContrast"> 高对比度模式
+            </label>
+        </div>
+        <div class="setting-item">
+            <label for="theme">主题：</label>
+            <select id="theme">
+                <option value="light">浅色</option>
+                <option value="dark">深色</option>
+                <option value="warm">暖色</option>
+            </select>
+        </div>
+        <button class="btn" id="closeSettingsBtn">关闭</button>
+    </div>
+
+     <!-- 加载动画 -->
+    <div class="loading" id="loading"></div>
+
+    <!-- JavaScript 引入 (注意 type="module") -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.1.1/dist/compressor.min.js"></script>
+    <script type="module" src="utils.js"></script>
+    <script type="module" src="modules/recording.js"></script>
+    <script type="module" src="modules/photo.js"></script>
+    <script type="module" src="modules/weather.js"></script>
+    <script type="module" src="modules/health.js"></script>
+    <script type="module" src="modules/settings.js"></script>
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
