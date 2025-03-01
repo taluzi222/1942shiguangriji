@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时光日记</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 加载提示 -->
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">加载中...</div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <h1>时光日记</h1>
+            <div class="header-buttons">
+                <button id="weatherBtn" class="btn">
+                    <i class="fas fa-cloud-sun"></i>
+                    查看天气
+                </button>
+                <button id="settingsBtn" class="btn">
+                    <i class="fas fa-cog"></i>
+                    设置
+                </button>
+            </div>
+        </header>
+
+        <!-- 录音区域 -->
+        <section class="record-section">
+            <div class="record-hint">按下录音键，录制您想说的话</div>
+            <div class="record-controls">
+                <button id="recordBtn" class="record-btn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <div id="recordingTime" class="recording-time">00:00</div>
+                <div id="recordingStatus" class="recording-status"></div>
+            </div>
+        </section>
+
+        <!-- 图片上传区域 -->
+        <section class="photo-section">
+            <div class="photo-upload">
+                <input type="file" id="photoInput" accept="image/*" multiple hidden>
+                <button onclick="document.getElementById('photoInput').click()" class="btn upload-btn">
+                    <i class="fas fa-camera"></i>
+                    上传图片
+                </button>
+            </div>
+            <div id="photoGrid" class="photo-grid"></div>
+        </section>
+
+        <!-- 健康记录区域 -->
+        <section class="health-section">
+            <h2>今日健康记录</h2>
+            <div class="health-form">
+                <div class="form-group">
+                    <label>血压：</label>
+                    <div class="blood-pressure-inputs">
+                        <input type="number" id="bloodPressureHigh" placeholder="收缩压" class="health-input">
+                        <span>/</span>
+                        <input type="number" id="bloodPressureLow" placeholder="舒张压" class="health-input">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>睡眠质量：</label>
+                    <select id="sleepQuality" class="health-input">
+                        <option value="">请选择</option>
+                        <option value="very-good">很好</option>
+                        <option value="good">好</option>
+                        <option value="normal">一般</option>
+                        <option value="bad">差</option>
+                        <option value="very-bad">很差</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>今日心情：</label>
+                    <select id="mood" class="health-input">
+                        <option value="">请选择</option>
+                        <option value="very-happy">非常开心</option>
+                        <option value="happy">开心</option>
+                        <option value="normal">一般</option>
+                        <option value="sad">不开心</option>
+                        <option value="very-sad">非常不开心</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- 日记查看和导出 -->
+        <section class="diary-section">
+            <div class="diary-controls">
+                <button id="viewDiaryBtn" class="btn">
+                    <i class="fas fa-book-open"></i>
+                    查看日记
+                </button>
+                <button id="exportBtn" class="btn">
+                    <i class="fas fa-file-export"></i>
+                    导出数据
+                </button>
+            </div>
+            <div class="export-controls">
+                <input type="date" id="startDate" class="date-input">
+                <span>至</span>
+                <input type="date" id="endDate" class="date-input">
+                <button id="confirmExportBtn" class="btn">导出</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- 天气模态框 -->
+    <div id="weatherModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>天气信息</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="weatherInfo" class="weather-info"></div>
+            <div class="modal-footer">
+                <button id="weatherVoiceBtn" class="btn">
+                    <i class="fas fa-volume-up"></i>
+                    语音播报
+                </button>
+                <button id="refreshWeatherBtn" class="btn">
+                    <i class="fas fa-sync-alt"></i>
+                    刷新
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-content">
+            <h2>设置</h2>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label>字体大小：</label>
+                    <select id="fontSize">
+                        <option value="small">小</option>
+                        <option value="medium" selected>中</option>
+                        <option value="large">大</option>
+                        <option value="extra-large">特大</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="highContrast">
+                        高对比度模式
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>主题：</label>
+                    <select id="theme">
+                        <option value="light">浅色</option>
+                        <option value="dark">深色</option>
+                        <option value="warm">暖色</option>
+                    </select>
+                </div>
+            </div>
+            <button id="closeSettingsBtn" class="btn">关闭</button>
+        </div>
+    </div>
+
+    <!-- 引入外部库 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.1.1/dist/compressor.min.js"></script>
+
+    <!-- 引入自定义脚本 -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/recording.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/health.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
